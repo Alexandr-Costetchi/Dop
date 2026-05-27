@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>План FRESH — обои</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #3d7a1a;
+    --green-light: #c8e89a;
+    --green-mid: #5fa020;
+    --bg: #eef5e0;
+    --card: #fff;
+    --text: #1e2d0e;
+    --muted: #7a8a5a;
+    --check-bg: #3d7a1a;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100%;
+    background: var(--bg);
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(170deg, #dff0b8 0%, #c8e890 30%, #eef8d8 60%, #f5fae8 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .phone {
+    width: 100%;
+    max-width: 390px;
+    min-height: 100vh;
+    padding: 52px 22px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Декор */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    font-size: 80px;
+    opacity: 0.18;
+  }
+  .deco-1 { top: -20px; left: -20px; transform: rotate(-25deg); }
+  .deco-2 { top: 10px; right: -10px; transform: rotate(20deg); }
+  .deco-3 { bottom: 60px; right: -20px; transform: rotate(-10deg); font-size: 60px; opacity: 0.12; }
+
+  /* Шапка */
+  .header {
+    text-align: center;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .brand {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(61,122,26,0.1);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 8px;
+  }
+  .title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .title em { color: var(--green-mid); font-style: normal; }
+
+  /* Прогресс */
+  .progress-wrap {
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .progress-text { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: 0.06em; }
+  .progress-pct { font-size: 13px; font-weight: 900; color: var(--green); }
+  .bar-bg { background: rgba(61,122,26,0.12); border-radius: 100px; height: 6px; overflow: hidden; }
+  .bar { height: 100%; background: linear-gradient(90deg, #3d7a1a, #7acc20); border-radius: 100px; transition: width 0.4s cubic-bezier(.4,0,.2,1); width: 0%; }
+
+  /* Блоки дней */
+  .blocks { display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; }
+
+  .day-card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 10px rgba(61,122,26,0.08);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 9px;
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .b-green  { background: #dcf0b8; color: #3a6e10; }
+  .b-purple { background: #ede4f8; color: #6030aa; }
+  .b-orange { background: #fae8d4; color: #b05010; }
+  .b-blue   { background: #dce8f8; color: #1840a0; }
+  .b-gold   { background: #f8f0cc; color: #906000; }
+  .b-teal   { background: #d4f0e8; color: #0a7050; }
+
+  .day-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  /* Чекбоксы */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    padding: 3px 4px;
+    border-radius: 7px;
+    transition: background 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .checklist li:active { background: rgba(61,122,26,0.07); }
+
+  .box {
+    width: 18px; height: 18px;
+    border: 2px solid #b8d498;
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+  .box svg {
+    width: 10px; height: 10px;
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  .checklist li.done .box {
+    background: var(--check-bg);
+    border-color: var(--check-bg);
+    transform: scale(1.08);
+  }
+  .checklist li.done .box svg { opacity: 1; transform: scale(1); }
+  .checklist li.done .lbl { text-decoration: line-through; color: #aaa; }
+
+  .lbl {
+    font-size: 13px;
+    color: #3a4a2a;
+    line-height: 1.45;
+    transition: color 0.15s;
+    user-select: none;
+  }
+
+  /* Двухколонный список */
+  .two-col-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 8px;
+  }
+
+  /* Финальная карточка */
+  .day-x {
+    background: var(--green);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .day-x-left {}
+  .day-x-date { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 900; color: #c8f060; letter-spacing: 0.05em; text-transform: uppercase; }
+  .day-x-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .day-x-motto { font-size: 17px; color: #fff; font-style: italic; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="deco deco-1">🍋</div>
+  <div class="deco deco-2">🍋</div>
+  <div class="deco deco-3">🍃</div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">Верный курс · обществознание</div>
+    <div class="title">ПЛАН <em>«FRESH»</em></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-text">ПРОГРЕСС</span>
+      <span class="progress-pct" id="pct">0%</span>
+    </div>
+    <div class="bar-bg"><div class="bar" id="bar"></div></div>
+  </div>
+
+  <!-- Blocks -->
+  <div class="blocks">
+
+    <!-- 1 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-green">1 июня</span>
+        <span class="day-name">Человек и общество</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">посмотреть видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить тесты</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить 22-е задания (с самопроверкой)</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать 25-е задания прошлых лет</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать итоговый краткий конспект</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать все планы по блоку</span></li>
+      </ul>
+    </div>
+
+    <!-- 2 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-purple">2 июня</span>
+        <span class="day-name">Социология</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">посмотреть видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить тесты</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить 22-е задания</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать 25-е задания прошлых лет</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать все планы по блоку</span></li>
+      </ul>
+    </div>
+
+    <!-- 4 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-orange">4 июня</span>
+        <span class="day-name">Политика</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">посмотреть видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить тесты</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить 22-е задания</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать 25-е задания прошлых лет</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать все планы по блоку</span></li>
+      </ul>
+    </div>
+
+    <!-- 5 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-blue">5 июня</span>
+        <span class="day-name">Право</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">посмотреть видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить тесты</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить 22-е задания</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать 25-е задания прошлых лет</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать все планы по блоку</span></li>
+      </ul>
+    </div>
+
+    <!-- 6 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-gold">6 июня</span>
+        <span class="day-name">Экономика</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">посмотреть видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить тесты</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">решить 22-е задания</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать 25-е задания прошлых лет</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать все планы по блоку</span></li>
+      </ul>
+    </div>
+
+    <!-- 8 + 9 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-teal">8 июня</span>
+        <span class="day-name">Повтор тем</span>
+      </div>
+      <ul class="checklist" style="margin-bottom:10px;">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">повторить сложные темы</span></li>
+      </ul>
+      <div class="day-header">
+        <span class="badge b-teal">9 июня</span>
+        <span class="day-name">Повтор метод.рек.</span>
+      </div>
+      <ul class="checklist">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">повтор теории по метод.рек.</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать краткий конспект</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">практика по метод.рек.</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">23-е задание</span></li>
+      </ul>
+    </div>
+
+    <!-- 10 июня -->
+    <div class="day-card">
+      <div class="day-header">
+        <span class="badge b-teal">10 июня</span>
+        <span class="day-name">Итоговое повторение</span>
+      </div>
+      <ul class="checklist two-col-list">
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">видео</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">практика по метод.рек.</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">повтор теории по метод.рек.</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">23-е задание</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">прочитать краткий конспект</span></li>
+        <li onclick="toggle(this)"><span class="box"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">выспаться 😴</span></li>
+      </ul>
+    </div>
+
+    <!-- День Х -->
+    <div class="day-x">
+      <div class="day-x-left">
+        <div class="day-x-date">11 июня — день Х</div>
+        <div class="day-x-sub">Верный курс | обществознание</div>
+      </div>
+      <div class="day-x-motto">Ты всё сможешь!</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Назначаем каждому пункту уникальный id
+  document.querySelectorAll('.checklist li').forEach((li, i) => {
+    li.dataset.id = 'item_' + i;
+  });
+
+  // Загружаем сохранённые галочки
+  function loadState() {
+    document.querySelectorAll('.checklist li').forEach(li => {
+      if (localStorage.getItem(li.dataset.id) === '1') {
+        li.classList.add('done');
+      }
+    });
+    update();
+  }
+
+  function toggle(li) {
+    li.classList.toggle('done');
+    // Сохраняем в память телефона
+    if (li.classList.contains('done')) {
+      localStorage.setItem(li.dataset.id, '1');
+    } else {
+      localStorage.removeItem(li.dataset.id);
+    }
+    update();
+  }
+
+  function update() {
+    const all = document.querySelectorAll('.checklist li');
+    const done = document.querySelectorAll('.checklist li.done');
+    const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+    document.getElementById('bar').style.width = pct + '%';
+    document.getElementById('pct').textContent = pct + '%';
+  }
+
+  loadState();
+</script>
+</body>
+</html>
